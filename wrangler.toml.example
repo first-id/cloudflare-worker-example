@@ -1,0 +1,12 @@
+name = "<YOUR WORKER NAME>"
+main = "src/index.js"
+compatibility_date = "2022-09-18"
+account_id = "<YOUR CLOUDFLARE ACCOUNT ID>"
+route = "<YOUR ROUTE>"
+
+[env.preprod.vars]
+FIRST_ID_GATE_URL = "https://gate.preprod.first-id.fr"
+
+# Override values for `--env production` usage
+[env.production.vars]
+FIRST_ID_GATE_URL = "https://gate.first-id.fr"

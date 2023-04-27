@@ -1,10 +1,14 @@
 import { parse } from 'cookie';
 
 async function handleRequest(request) {
+  const COOKIE_LIFETIME_IN_DAY = 180;
+  const COOKIE_NAME = 'firstid';
+
   // extract cookies from request
   const cookie = parse(request.headers.get('Cookie') || '');
   const url = new URL(request.url);
 
+  console.log(cookie);
   // parse current request to get queries params
   const queryParams = new URLSearchParams(url.search);
 
@@ -20,7 +24,7 @@ async function handleRequest(request) {
 	  const redirectUrl = decodeURIComponent(queryParams.get('redirectUri'));
 
 	  // build the firstid cookie header
-	  firstIdCookie = `firstid=${firstid}; path=/; secure; HttpOnly; SameSite=Strict`
+	  firstIdCookie = `${COOKIE_NAME}=${firstid}; path=/; secure; HttpOnly: Expires=${new Date(Date.now() + 1000 * 60 * 60 * 24 * COOKIE_LIFETIME_IN_DAY).toUTCString()}`;
 
 	  // build the redirect response
 	  const response = Response.redirect(`${url.protocol}//${url.host}${redirectUrl}`, 302)
@@ -38,8 +42,10 @@ async function handleRequest(request) {
 	// just continue the request execution
 	return await fetch(request);
   } else {
+    // extract path in URL
+    const urlRedirect = url.pathname.replace('/first-id/', '/')
 	  // no firstid, go to FirstID gate
-	  const response = Response.redirect(`${FIRST_ID_GATE_URL}?redirectHost=${encodeURIComponent(url.protocol+'//'+url.host)}&redirectUri=${encodeURIComponent(url.pathname + (url.search ? '?'+url.search : ''))}`, 302);
+	  const response = Response.redirect(`${FIRST_ID_GATE_URL}?redirectHost=${encodeURIComponent(url.protocol+'//'+url.host + '/first-id/')}&redirectUri=${encodeURIComponent(urlRedirect + (url.search ? '?'+url.search : ''))}`, 302);
 
 	  return response
   }

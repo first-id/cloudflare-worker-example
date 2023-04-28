@@ -4,7 +4,7 @@ Ce repository est un exemple de code d'un Worker CloudFlare permetant d'interagi
 
 Il va : 
 * Détecter si l'utilisateur dispose déjà d'un cookie `fistid` ou non
-* Si ne n'est pas le cas, alors il fera la redirection vers le service FirstID, puis crera le cookie de 1er niveau sur notre domaine avec la valeur de l'identifiant FirstID
+* Si ne n'est pas le cas, alors il fera la redirection vers le service FirstID, puis créra le cookie de 1er niveau sur votre domaine avec la valeur de l'identifiant FirstID
 
 ## Installation
 

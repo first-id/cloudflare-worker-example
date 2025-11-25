@@ -24,7 +24,7 @@ async function handleRequest(request) {
 	  const redirectUrl = decodeURIComponent(queryParams.get('redirectUri'));
 
 	  // build the firstid cookie header
-	  firstIdCookie = `${COOKIE_NAME}=${firstid}; path=/; secure; HttpOnly; Expires=${new Date(Date.now() + 1000 * 60 * 60 * 24 * COOKIE_LIFETIME_IN_DAY).toUTCString()}`;
+	  firstIdCookie = `${COOKIE_NAME}=${firstid}; path=/; secure; Expires=${new Date(Date.now() + 1000 * 60 * 60 * 24 * COOKIE_LIFETIME_IN_DAY).toUTCString()}`;
 
 	  // build the redirect response
 	  const response = Response.redirect(`${url.protocol}//${url.host}${redirectUrl}`, 302)
